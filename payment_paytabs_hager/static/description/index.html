@@ -1,846 +1,238 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayTabs Payment Provider for Odoo 17</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            padding: 0;
-            margin: 0;
-            overflow-x: hidden;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-        
-        @keyframes shimmer {
-            0% {
-                background-position: -1000px 0;
-            }
-            100% {
-                background-position: 1000px 0;
-            }
-        }
-        
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        @keyframes wave {
-            0%, 100% {
-                transform: translateX(0) translateY(0);
-            }
-            25% {
-                transform: translateX(10px) translateY(-10px);
-            }
-            50% {
-                transform: translateX(0) translateY(-20px);
-            }
-            75% {
-                transform: translateX(-10px) translateY(-10px);
-            }
-        }
-        
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
-            }
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-        
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            animation: fadeIn 0.8s ease-out;
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 80px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(30, 64, 175, 0.3);
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.03) 10px,
-                rgba(255,255,255,0.03) 20px
-            );
-            animation: rotate 60s linear infinite;
-        }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        /* Floating particles effect */
-        .hero-content::before {
-            content: '💳';
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            font-size: 3em;
-            opacity: 0.1;
-            animation: wave 6s ease-in-out infinite;
-        }
-        
-        .hero-content::after {
-            content: '🔒';
-            position: absolute;
-            bottom: 20%;
-            right: 10%;
-            font-size: 3em;
-            opacity: 0.1;
-            animation: wave 8s ease-in-out infinite reverse;
-        }
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.03) 10px,
-                rgba(255,255,255,0.03) 20px
-            );
-            animation: rotate 60s linear infinite;
-        }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-size: 3.5em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .hero p {
-            font-size: 1.4em;
-            opacity: 0.95;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-        
-        .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 25px;
-            margin: 5px;
-            font-size: 0.9em;
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 1.2s ease-out 0.4s both, glow 3s ease-in-out infinite;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .badge:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
-        }
-        
-        .content {
-            padding: 60px 40px;
-        }
-        
-        .section {
-            margin-bottom: 60px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .section-title {
-            font-size: 2.2em;
-            color: #2563eb;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 15px;
-            animation: slideInLeft 0.8s ease-out;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #2563eb, #3b82f6);
-            border-radius: 2px;
-            animation: shimmer 2s ease-in-out infinite;
-            background-size: 200% 100%;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .feature-card {
-            background: #f7fafc;
-            padding: 30px;
-            border-radius: 12px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid transparent;
-            animation: fadeInUp 0.6s ease-out both;
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .feature-card:hover::before {
-            left: 100%;
-        }
-        
-        .feature-card:nth-child(1) { animation-delay: 0.1s; }
-        .feature-card:nth-child(2) { animation-delay: 0.2s; }
-        .feature-card:nth-child(3) { animation-delay: 0.3s; }
-        .feature-card:nth-child(4) { animation-delay: 0.4s; }
-        .feature-card:nth-child(5) { animation-delay: 0.5s; }
-        .feature-card:nth-child(6) { animation-delay: 0.6s; }
-        
-        .feature-card:hover {
-            transform: translateY(-15px) rotateX(5deg) scale(1.03);
-            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.4);
-            border-color: #2563eb;
-            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
-        }
-        
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite, scaleIn 0.5s ease-out;
-            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
-        }
-        
-        .feature-card:hover .feature-icon {
-            transform: rotate(360deg) scale(1.15);
-            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.5);
-            animation: float 3s ease-in-out infinite, bounce 0.6s ease-in-out;
-        }
-        
-        .feature-card h3 {
-            color: #2d3748;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-        
-        .feature-card:hover h3 {
-            color: #2563eb;
-        }
-        
-        .feature-card p {
-            color: #718096;
-            line-height: 1.7;
-        }
-        
-        .currency-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .currency-tag {
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1em;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            animation: fadeInUp 0.6s ease-out both;
-            transition: all 0.3s ease;
-        }
-        
-        .currency-tag:nth-child(1) { animation-delay: 0.1s; }
-        .currency-tag:nth-child(2) { animation-delay: 0.2s; }
-        .currency-tag:nth-child(3) { animation-delay: 0.3s; }
-        .currency-tag:nth-child(4) { animation-delay: 0.4s; }
-        .currency-tag:nth-child(5) { animation-delay: 0.5s; }
-        
-        .currency-tag:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
-        }
-        
-        .currency-tag.optional {
-            background: #e2e8f0;
-            color: #4a5568;
-            box-shadow: none;
-        }
-        
-        .currency-tag.optional:hover {
-            background: #cbd5e0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .alert {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-            animation: slideInRight 0.8s ease-out;
-            transition: all 0.3s ease;
-        }
-        
-        .alert:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.2);
-        }
-        
-        .alert strong {
-            color: #92400e;
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .steps {
-            counter-reset: step;
-            list-style: none;
-        }
-        
-        .steps li {
-            counter-increment: step;
-            position: relative;
-            padding-left: 80px;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out both;
-            transition: all 0.3s ease;
-        }
-        
-        .steps li:nth-child(1) { animation-delay: 0.1s; }
-        .steps li:nth-child(2) { animation-delay: 0.2s; }
-        .steps li:nth-child(3) { animation-delay: 0.3s; }
-        .steps li:nth-child(4) { animation-delay: 0.4s; }
-        .steps li:nth-child(5) { animation-delay: 0.5s; }
-        
-        .steps li:hover {
-            transform: translateX(10px);
-        }
-        
-        .steps li::before {
-            content: counter(step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #2563eb, #3b82f6);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .steps li:hover::before {
-            transform: rotate(360deg) scale(1.1);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
-        }
-        
-        .steps li strong {
-            display: block;
-            font-size: 1.2em;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-        
-        .info-box {
-            background: #eff6ff;
-            border: 2px solid #2563eb;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 30px 0;
-            animation: fadeInUp 0.8s ease-out;
-            transition: all 0.3s ease;
-        }
-        
-        .info-box:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
-        }
-        
-        .info-box ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .info-box li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            animation: slideInLeft 0.6s ease-out both;
-        }
-        
-        .info-box li:nth-child(1) { animation-delay: 0.1s; }
-        .info-box li:nth-child(2) { animation-delay: 0.2s; }
-        .info-box li:nth-child(3) { animation-delay: 0.3s; }
-        .info-box li:nth-child(4) { animation-delay: 0.4s; }
-        .info-box li:nth-child(5) { animation-delay: 0.5s; }
-        
-        .info-box li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #2563eb;
-            font-weight: bold;
-            font-size: 1.2em;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .cta-section {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 60px 40px;
-            text-align: center;
-            margin-top: 60px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .cta-section p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-        
-        .footer {
-            background: #2d3748;
-            color: #cbd5e0;
-            padding: 40px;
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-        
-        .footer p {
-            margin: 10px 0;
-            animation: fadeInUp 0.8s ease-out both;
-        }
-        
-        .footer p:nth-child(1) { animation-delay: 0.1s; }
-        .footer p:nth-child(2) { animation-delay: 0.2s; }
-        .footer p:nth-child(3) { animation-delay: 0.3s; }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5em;
-            }
-            
-            .hero p {
-                font-size: 1.1em;
-            }
-            
-            .content {
-                padding: 40px 20px;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .steps li {
-                padding-left: 70px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="hero">
-            <div class="hero-content">
-                <h1>💳 PayTabs Payment Provider</h1>
-                <p>Secure Payment Integration for Odoo 17</p>
-                <div>
-                    <span class="badge">🔒 PCI-DSS Compliant</span>
-                    <span class="badge">⚡ Real-time Processing</span>
-                    <span class="badge">🌍 Multi-Currency</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="content">
-            <div class="section">
-                <h2 class="section-title">Why Choose PayTabs?</h2>
-                <p style="font-size: 1.1em; color: #4a5568; margin-bottom: 40px;">
-                    Integrate PayTabs payment gateway seamlessly with your Odoo 17 instance. 
-                    Accept credit and debit card payments from customers across Egypt and the Middle East 
-                    with a secure, PCI-compliant payment solution.
-                </p>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🔐</div>
-                        <h3>Secure Payments</h3>
-                        <p>PCI-DSS compliant payment processing with PayTabs Egypt secure gateway. Your customers' data is always protected.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">💰</div>
-                        <h3>Multi-Currency</h3>
-                        <p>EGP by default, with optional support for USD, EUR, GBP, and SAR currencies.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">↩️</div>
-                        <h3>Refund Support</h3>
-                        <p>Process full or partial refunds directly from Odoo with just a few clicks.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Real-time Updates</h3>
-                        <p>Instant transaction status updates via server-to-server callbacks.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">🔄</div>
-                        <h3>Redirect Flow</h3>
-                        <p>Secure redirect-based payment flow that keeps your customers safe.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">📱</div>
-                        <h3>Mobile Ready</h3>
-                        <p>Fully responsive payment experience on all devices and screen sizes.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">Supported Currencies</h2>
-                <div class="currency-tags">
-                    <span class="currency-tag">🇪🇬 EGP - Egyptian Pound</span>
-                    <span class="currency-tag optional">🇺🇸 USD - US Dollar</span>
-                    <span class="currency-tag optional">🇪🇺 EUR - Euro</span>
-                    <span class="currency-tag optional">🇬🇧 GBP - British Pound</span>
-                    <span class="currency-tag optional">🇸🇦 SAR - Saudi Riyal</span>
-                </div>
-                <div class="alert">
-                    <strong>💡 Important Note</strong>
-                    EGP is supported by default on all PayTabs Egypt accounts. Multi-currency support (USD, EUR, GBP, SAR) requires special activation from PayTabs. Contact PayTabs support to enable multi-currency, then activate it in the provider settings.
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">Quick Setup Guide</h2>
-                <ol class="steps">
-                    <li>
-                        <strong>Install the Module</strong>
-                        Search for "PayTabs Payment Provider" in Odoo Apps and click Install
-                    </li>
-                    <li>
-                        <strong>Get PayTabs Credentials</strong>
-                        Log in to your PayTabs merchant dashboard and get your Profile ID and Server Key
-                    </li>
-                    <li>
-                        <strong>Configure Provider</strong>
-                        Go to Invoicing → Configuration → Payment Providers → PayTabs Egypt
-                    </li>
-                    <li>
-                        <strong>Enter Credentials</strong>
-                        Fill in your Profile ID and Server Key, then enable the provider
-                    </li>
-                    <li>
-                        <strong>Test Payment</strong>
-                        Create a test order and complete a payment to verify the integration
-                    </li>
-                </ol>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">Requirements</h2>
-                <div class="info-box">
-                    <ul>
-                        <li>Odoo 17.0 or higher</li>
-                        <li>Active PayTabs Egypt merchant account</li>
-                        <li>Valid PayTabs Profile ID and Server Key</li>
-                        <li>SSL certificate (HTTPS) for production use</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">Configuration Details</h2>
-                <p style="margin-bottom: 20px;">After installation, configure the following in the payment provider settings:</p>
-                <div class="info-box">
-                    <ul>
-                        <li><strong>Profile ID:</strong> Your PayTabs merchant profile ID (numeric)</li>
-                        <li><strong>Server Key:</strong> Your PayTabs API server key</li>
-                        <li><strong>Multi-Currency:</strong> Enable only if your account supports it</li>
-                        <li><strong>State:</strong> Set to "Enabled" to activate payments</li>
-                        <li><strong>Payment Journal:</strong> Select the accounting journal</li>
-                    </ul>
-                </div>
-                <div class="alert">
-                    <strong>🔒 Security Reminder</strong>
-                    Keep your Server Key confidential. Never share it publicly or commit it to version control.
-                </div>
-            </div>
-        </div>
-
-        <div class="cta-section">
-            <h2>Ready to Get Started?</h2>
-            <p>Install PayTabs Payment Provider today and start accepting payments securely!</p>
-        </div>
-
-        <div class="footer">
-            <p><strong>PayTabs Payment Provider for Odoo 17</strong></p>
-            <p>Version 17.0.1.0.0 | Author: Hager Mohamed | License: LGPL-3</p>
-            <p>Professional payment integration solution</p>
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan" style="color:#2563eb;">PayTabs Payment Provider for Odoo 17</h2>
+            <h3 class="oe_slogan">Secure Payment Integration for Egypt & Middle East</h3>
         </div>
     </div>
-    
-    <script>
-        // Smooth scroll reveal animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all sections
-        document.querySelectorAll('.section, .feature-card, .currency-tag, .steps li').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-            observer.observe(el);
-        });
-        
-        // Add parallax effect to hero
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-        
-        // Add ripple effect on feature cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(37, 99, 235, 0.3)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s ease-out';
-                ripple.style.pointerEvents = 'none';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-        
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(2);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
-</html>""
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Why Choose PayTabs?</h2>
+            <p class="oe_mt32 text-center" style="font-size: 18px;">
+                Integrate PayTabs payment gateway seamlessly with your Odoo 17 instance. 
+                Accept credit and debit card payments from customers across Egypt and the Middle East 
+                with a secure, PCI-compliant payment solution.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">🔐 Secure Payments</h3>
+                <p class="oe_mt16">
+                    PCI-DSS compliant payment processing with PayTabs Egypt secure gateway. 
+                    Your customers' data is always protected with industry-standard encryption.
+                </p>
+            </div>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">💰 Multi-Currency Support</h3>
+                <p class="oe_mt16">
+                    Support for Egyptian Pound (EGP) by default, with optional multi-currency 
+                    support for USD, EUR, GBP, and SAR.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">↩️ Refund Support</h3>
+                <p class="oe_mt16">
+                    Process full or partial refunds directly from Odoo with just a few clicks. 
+                    Refunds are processed instantly through PayTabs API.
+                </p>
+            </div>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">⚡ Real-time Updates</h3>
+                <p class="oe_mt16">
+                    Instant transaction status updates via server-to-server callbacks. 
+                    Know immediately when payments are completed or failed.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">🔄 Redirect Flow</h3>
+                <p class="oe_mt16">
+                    Secure redirect-based payment flow that keeps your customers safe. 
+                    Customers are redirected to PayTabs secure payment page.
+                </p>
+            </div>
+        </div>
+        <div class="oe_span6">
+            <div class="oe_picture">
+                <h3 style="color:#2563eb;">📱 Mobile Ready</h3>
+                <p class="oe_mt16">
+                    Fully responsive payment experience on all devices and screen sizes. 
+                    Works perfectly on desktop, tablet, and mobile.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Supported Currencies</h2>
+            <div class="oe_mt32 text-center">
+                <span class="badge badge-primary" style="font-size: 16px; margin: 5px; padding: 10px 20px;">🇪🇬 EGP - Egyptian Pound</span>
+                <span class="badge badge-secondary" style="font-size: 16px; margin: 5px; padding: 10px 20px;">🇺🇸 USD - US Dollar</span>
+                <span class="badge badge-secondary" style="font-size: 16px; margin: 5px; padding: 10px 20px;">🇪🇺 EUR - Euro</span>
+                <span class="badge badge-secondary" style="font-size: 16px; margin: 5px; padding: 10px 20px;">🇬🇧 GBP - British Pound</span>
+                <span class="badge badge-secondary" style="font-size: 16px; margin: 5px; padding: 10px 20px;">🇸🇦 SAR - Saudi Riyal</span>
+            </div>
+            <div class="alert alert-warning oe_mt32" style="margin: 30px auto; max-width: 800px;">
+                <strong>💡 Important Note:</strong> EGP is supported by default on all PayTabs Egypt accounts. 
+                Multi-currency support (USD, EUR, GBP, SAR) requires special activation from PayTabs. 
+                Contact PayTabs support to enable multi-currency.
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Quick Setup Guide</h2>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <div class="oe_mt32">
+                <div style="padding: 20px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #2563eb;">
+                    <h4 style="color:#2563eb; margin-bottom: 10px;">Step 1: Install the Module</h4>
+                    <p>Search for "PayTabs Payment Provider" in Odoo Apps and click Install</p>
+                </div>
+                <div style="padding: 20px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #2563eb;">
+                    <h4 style="color:#2563eb; margin-bottom: 10px;">Step 2: Get PayTabs Credentials</h4>
+                    <p>Log in to your PayTabs merchant dashboard and get your Profile ID and Server Key</p>
+                </div>
+                <div style="padding: 20px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #2563eb;">
+                    <h4 style="color:#2563eb; margin-bottom: 10px;">Step 3: Configure Provider</h4>
+                    <p>Go to Invoicing → Configuration → Payment Providers → PayTabs Egypt</p>
+                </div>
+                <div style="padding: 20px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #2563eb;">
+                    <h4 style="color:#2563eb; margin-bottom: 10px;">Step 4: Enter Credentials</h4>
+                    <p>Fill in your Profile ID and Server Key, then enable the provider</p>
+                </div>
+                <div style="padding: 20px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #2563eb;">
+                    <h4 style="color:#2563eb; margin-bottom: 10px;">Step 5: Test Payment</h4>
+                    <p>Create a test order and complete a payment to verify the integration</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Requirements</h2>
+            <div class="oe_mt32" style="max-width: 800px; margin: 30px auto;">
+                <ul style="font-size: 16px; line-height: 2;">
+                    <li>✓ Odoo 17.0 or higher</li>
+                    <li>✓ Active PayTabs Egypt merchant account</li>
+                    <li>✓ Valid PayTabs Profile ID and Server Key</li>
+                    <li>✓ SSL certificate (HTTPS) for production use</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Configuration Details</h2>
+            <p class="oe_mt32 text-center" style="font-size: 16px;">
+                After installation, configure the following in the payment provider settings:
+            </p>
+            <div class="oe_mt32" style="max-width: 800px; margin: 30px auto;">
+                <ul style="font-size: 16px; line-height: 2;">
+                    <li><strong>Profile ID:</strong> Your PayTabs merchant profile ID (numeric)</li>
+                    <li><strong>Server Key:</strong> Your PayTabs API server key</li>
+                    <li><strong>Multi-Currency:</strong> Enable only if your account supports it</li>
+                    <li><strong>State:</strong> Set to "Enabled" to activate payments</li>
+                    <li><strong>Payment Journal:</strong> Select the accounting journal</li>
+                </ul>
+            </div>
+            <div class="alert alert-danger oe_mt32" style="margin: 30px auto; max-width: 800px;">
+                <strong>🔒 Security Reminder:</strong> Keep your Server Key confidential. 
+                Never share it publicly or commit it to version control.
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Key Features</h2>
+        </div>
+    </div>
+    <div class="oe_row oe_spaced oe_mt32">
+        <div class="oe_span4">
+            <div class="text-center">
+                <span style="font-size: 48px;">🔐</span>
+                <h3 class="oe_mt16">PCI-DSS Compliant</h3>
+                <p class="oe_mt16">Industry-standard security for all transactions</p>
+            </div>
+        </div>
+        <div class="oe_span4">
+            <div class="text-center">
+                <span style="font-size: 48px;">⚡</span>
+                <h3 class="oe_mt16">Real-time Processing</h3>
+                <p class="oe_mt16">Instant payment confirmation and updates</p>
+            </div>
+        </div>
+        <div class="oe_span4">
+            <div class="text-center">
+                <span style="font-size: 48px;">🌍</span>
+                <h3 class="oe_mt16">Multi-Currency</h3>
+                <p class="oe_mt16">Support for EGP, USD, EUR, GBP, SAR</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Ready to Get Started?</h2>
+            <p class="oe_mt32 text-center" style="font-size: 18px;">
+                Install PayTabs Payment Provider today and start accepting payments securely!
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12 text-center">
+            <p style="font-size: 14px; color: #6c757d;">
+                <strong>PayTabs Payment Provider for Odoo 17</strong><br>
+                Version 17.0.1.0.0 | Author: Hager Mohamed | License: LGPL-3<br>
+                Community Version - Free & Open Source
+            </p>
+        </div>
+    </div>
+</section>
