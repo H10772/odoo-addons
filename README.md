@@ -6,10 +6,10 @@ Collection of custom Odoo modules.
 
 ### Odoo 17
 
-#### PayTabs Egypt Payment Gateway
+#### PayTabs Egypt by Hager
 Payment gateway integration for PayTabs Egypt.
 
-**Technical Name:** `payment_paytabs_eg`
+**Technical Name:** `payment_paytabs_hager`
 
 **Features:**
 - Secure payment processing via PayTabs Egypt
@@ -23,10 +23,10 @@ Payment gateway integration for PayTabs Egypt.
 **Installation:**
 ```bash
 git clone -b 17.0 https://github.com/H10772/odoo-addons.git
-cp -r odoo-addons/payment_paytabs_eg /path/to/odoo/addons/
+cp -r odoo-addons/payment_paytabs_hager /path/to/odoo/addons/
 ```
 
-**Documentation:** See [payment_paytabs_eg/README.md](payment_paytabs_eg/README.md)
+**Documentation:** See [payment_paytabs_hager/README.md](payment_paytabs_hager/README.md)
 
 ## Branches
 
