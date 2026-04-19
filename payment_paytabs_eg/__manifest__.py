@@ -1,5 +1,5 @@
 {
-    'name': 'PayTabs Payment Provider',
+    'name': 'PayTabs Egypt Payment Gateway',
     'version': '17.0.1.0.0',
     'category': 'Accounting/Payment Providers',
     'summary': 'Accept payments via PayTabs Egypt - EGP & Multi-Currency Support',
