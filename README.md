@@ -20,7 +20,7 @@ Payment gateway integration for PayTabs Egypt.
 
 **Installation:**
 ```bash
-git clone -b odoo-17 https://github.com/H10772/odoo-addons.git
+git clone -b 17.0 https://github.com/H10772/odoo-addons.git
 cp -r odoo-addons/payment_paytabs /path/to/odoo/addons/
 ```
 
@@ -28,7 +28,8 @@ cp -r odoo-addons/payment_paytabs /path/to/odoo/addons/
 
 ## Branches
 
-- `odoo-17` - Modules for Odoo 17
+- `17.0` - Modules for Odoo 17 (recommended)
+- `odoo-17` - Modules for Odoo 17 (alternative)
 - `main` - General information
 
 ## License
