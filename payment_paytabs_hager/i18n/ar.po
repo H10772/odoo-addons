@@ -1,0 +1,142 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * payment_paytabs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-19 18:00:00+0000\n"
+"PO-Revision-Date: 2026-04-19 18:00:00+0000\n"
+"Last-Translator: Hager Mohamed\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+#. module: payment_paytabs
+#: model:payment.method,name:payment_paytabs.payment_method_paytabs
+msgid "Credit Card (PayTabs)"
+msgstr "بطاقة ائتمان (باي تابس)"
+
+#. module: payment_paytabs
+#: model:payment.provider,name:payment_paytabs.payment_provider_paytabs
+msgid "PayTabs Egypt"
+msgstr "باي تابس مصر"
+
+#. module: payment_paytabs
+#: model_terms:payment.provider,paytabs_profile_id:payment_paytabs.payment_provider_paytabs
+msgid "Profile ID"
+msgstr "معرف الملف الشخصي"
+
+#. module: payment_paytabs
+#: model_terms:payment.provider,paytabs_server_key:payment_paytabs.payment_provider_paytabs
+msgid "Server Key"
+msgstr "مفتاح الخادم"
+
+#. module: payment_paytabs
+#: model_terms:payment.provider,paytabs_profile_id:payment_paytabs.payment_provider_paytabs
+msgid "The ID of your PayTabs profile."
+msgstr "معرف ملفك الشخصي في باي تابس."
+
+#. module: payment_paytabs
+#: model_terms:payment.provider,paytabs_server_key:payment_paytabs.payment_provider_paytabs
+msgid "The server key of your PayTabs profile."
+msgstr "مفتاح الخادم لملفك الشخصي في باي تابس."
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs authentication failed. Please check your Server Key."
+msgstr "فشلت المصادقة مع باي تابس. يرجى التحقق من مفتاح الخادم."
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs Error: %s"
+msgstr "خطأ في باي تابس: %s"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "Could not connect to PayTabs: %s"
+msgstr "تعذر الاتصال بباي تابس: %s"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "Received data with missing reference (cart_id)."
+msgstr "تم استلام بيانات بدون رقم مرجعي (cart_id)."
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "No transaction found matching reference %s."
+msgstr "لم يتم العثور على معاملة تطابق المرجع %s."
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs: %s"
+msgstr "باي تابس: %s"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs: Cannot process refund - no transaction reference"
+msgstr "باي تابس: لا يمكن معالجة الاسترداد - لا يوجد رقم مرجعي للمعاملة"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs: Refund authentication failed"
+msgstr "باي تابس: فشلت مصادقة الاسترداد"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs Refund: %s"
+msgstr "استرداد باي تابس: %s"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_transaction.py
+#, python-format
+msgid "PayTabs: Refund failed - %s"
+msgstr "باي تابس: فشل الاسترداد - %s"
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_provider.py
+#, python-format
+msgid "PayTabs Profile ID must be a numeric value."
+msgstr "يجب أن يكون معرف الملف الشخصي لباي تابس قيمة رقمية."
+
+#. module: payment_paytabs
+#: code:addons/payment_paytabs/models/payment_provider.py
+#, python-format
+msgid "PayTabs Server Key seems too short. Please check your credentials."
+msgstr "مفتاح خادم باي تابس يبدو قصيرًا جدًا. يرجى التحقق من بيانات الاعتماد الخاصة بك."
+
+#. module: payment_paytabs
+#: model:ir.model,name:payment_paytabs.model_payment_provider
+msgid "Payment Provider"
+msgstr "مزود الدفع"
+
+#. module: payment_paytabs
+#: model:ir.model,name:payment_paytabs.model_payment_transaction
+msgid "Payment Transaction"
+msgstr "معاملة الدفع"
+
+#. module: payment_paytabs
+#: model:ir.model,name:payment_paytabs.model_account_payment_method
+msgid "Payment Methods"
+msgstr "طرق الدفع"
+
+#. module: payment_paytabs
+msgid "Payment for %s"
+msgstr "دفع مقابل %s"
+
+#. module: payment_paytabs
+msgid "Refund for %s"
+msgstr "استرداد مقابل %s"

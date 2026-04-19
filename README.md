@@ -30,7 +30,8 @@ cp -r odoo-addons/payment_paytabs_eg /path/to/odoo/addons/
 
 ## Branches
 
-- `odoo-17` - Modules for Odoo 17
+- `17.0` - Modules for Odoo 17 (recommended)
+- `odoo-17` - Modules for Odoo 17 (alternative)
 - `main` - General information
 
 ## License

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_paytabs" model="payment.provider">
+        <field name="name">PayTabs Egypt - Hager</field>
+        <field name="code">paytabs_hager</field>
+        <field name="state">enabled</field>
+        <field name="redirect_form_view_id" ref="payment_paytabs_hager.paytabs_form"/>
+        <field name="payment_method_ids" eval="[(6, 0, [ref('payment_paytabs_hager.payment_method_paytabs')])]"/>
+    </record>
+</odoo>
