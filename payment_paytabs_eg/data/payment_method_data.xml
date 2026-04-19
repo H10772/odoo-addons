@@ -1,7 +1,0 @@
-<odoo>
-    <record id="payment_method_paytabs" model="payment.method">
-        <field name="name">Credit Card (PayTabs)</field>
-        <field name="code">paytabs</field>
-        <field name="sequence">10</field>
-    </record>
-</odoo>

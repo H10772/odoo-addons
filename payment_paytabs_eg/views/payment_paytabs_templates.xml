@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="paytabs_form" name="PayTabs Redirect Form">
-        <form t-att-action="api_url" method="get">
-            <input type="hidden" name="redirect" value="1"/>
-        </form>
-    </template>
-</odoo>
