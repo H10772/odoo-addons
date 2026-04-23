@@ -1,12 +1,8 @@
 # PayTabs Payment Provider for Odoo 17
 
-**Community Version** | Free & Open Source
-
 ## Overview
 
 This module integrates PayTabs payment gateway with Odoo 17, enabling customers to pay for orders using credit and debit cards through PayTabs Egypt secure payment platform.
-
-This is a community-developed module, free to use under LGPL-3 license.
 
 ## Features
 
@@ -23,16 +19,8 @@ This is a community-developed module, free to use under LGPL-3 license.
 
 - Odoo 17.0 or higher
 - Active PayTabs Egypt merchant account
-- PayTabs Profile ID and Server Key (obtain from PayTabs merchant dashboard)
+- PayTabs Profile ID and Server Key
 - SSL certificate (HTTPS) for production use
-
-### PayTabs API Credentials
-
-To use this module, you need:
-1. **Profile ID**: A numeric identifier for your PayTabs merchant account
-2. **Server Key**: Your API authentication key (keep this confidential)
-
-You can obtain these credentials from your PayTabs merchant dashboard under Developers > API Keys.
 
 ## Installation
 
@@ -154,19 +142,10 @@ For issues related to:
 - PayTabs account: Contact PayTabs support at support@paytabs.com
 - Odoo configuration: Refer to Odoo documentation
 
-## Security
-
-- Never share your Server Key publicly or commit it to version control
-- Always use HTTPS in production environments
-- Keep your Odoo instance and this module updated
-- Review PayTabs security best practices in their documentation
-
 ## Credits
 
 Author: Hager Mohamed  
 Version: 17.0.1.0.0  
 License: LGPL-3
-
-This is a community module, free and open source.
 
 For detailed version history, see CHANGELOG.md
