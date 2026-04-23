@@ -1,0 +1,24 @@
+<odoo>
+    <record id="payment_provider_form_paytabs" model="ir.ui.view">
+        <field name="name">payment.provider.form.paytabs</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='provider_credentials']" position="inside">
+                <group invisible="code != 'paytabs_hager'">
+                    <field name="paytabs_profile_id" required="code == 'paytabs_hager'" string="Profile ID"/>
+                    <field name="paytabs_server_key" required="code == 'paytabs_hager'" string="Server Key" password="True"/>
+                    <field name="paytabs_multi_currency" string="Multi-Currency Support"/>
+                    <div colspan="2" class="alert alert-info" role="alert" invisible="code != 'paytabs_hager'">
+                        <strong>Currency Support:</strong>
+                        <ul class="mb-0">
+                            <li>By default, PayTabs Egypt accounts support <strong>EGP only</strong></li>
+                            <li>Enable multi-currency if your account supports USD, EUR, GBP, SAR</li>
+                            <li>Contact PayTabs support to activate multi-currency on your account</li>
+                        </ul>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
